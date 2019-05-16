@@ -61,6 +61,12 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     private boolean mHideConfirmButton = false;
     private Button mCancelButton;
     private Button mNeutralButton;
+    private int mConfirmButtonBackgroundColor;
+    private int mConfirmButtonTextColor;
+    private int mNeutralButtonBackgroundColor;
+    private int mNeutralButtonTextColor;
+    private int mCancelButtonBackgroundColor;
+    private int mCancelButtonTextColor;
     private ProgressHelper mProgressHelper;
     private FrameLayout mWarningFrame;
     private OnSweetClickListener mCancelClickListener;
@@ -196,6 +202,12 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         setCancelText(mCancelText);
         setConfirmText(mConfirmText);
         setNeutralText(mNeutralText);
+        setConfirmButtonBackgroundColor(mConfirmButtonBackgroundColor);
+        setConfirmButtonTextColor(mConfirmButtonTextColor);
+        setCancelButtonBackgroundColor(mCancelButtonBackgroundColor);
+        setCancelButtonTextColor(mCancelButtonTextColor);
+        setNeutralButtonBackgroundColor(mNeutralButtonBackgroundColor);
+        setNeutralButtonTextColor(mNeutralButtonTextColor);
         changeAlertType(mAlertType, true);
 
     }
@@ -400,6 +412,78 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
             mConfirmButton.setText(mConfirmText);
         }
         return this;
+    }
+
+    public SweetAlertDialog setConfirmButtonBackgroundColor(int color){
+        mConfirmButtonBackgroundColor = color;
+        if(mConfirmButton != null){
+            mConfirmButton.setBackgroundColor(mConfirmButtonBackgroundColor);
+        }
+        return this;
+    }
+
+    public int getConfirmButtonBackgroundColor(){
+        return mConfirmButtonBackgroundColor;
+    }
+
+    public SweetAlertDialog setNeutralButtonBackgroundColor(int color){
+        mNeutralButtonBackgroundColor = color;
+        if(mNeutralButton != null){
+            mNeutralButton.setBackgroundColor(mNeutralButtonBackgroundColor);
+        }
+        return this;
+    }
+
+    public int getNeutralButtonBackgroundColor(){
+        return mNeutralButtonBackgroundColor;
+    }
+
+    public SweetAlertDialog setCancelButtonBackgroundColor(int color){
+        mCancelButtonBackgroundColor = color;
+        if(mCancelButton != null){
+            mCancelButton.setBackgroundColor(mCancelButtonBackgroundColor);
+        }
+        return this;
+    }
+
+    public int getCancelButtonBackgroundColor(){
+        return mCancelButtonBackgroundColor;
+    }
+
+    public SweetAlertDialog setConfirmButtonTextColor(int color){
+        mConfirmButtonTextColor = color;
+        if(mConfirmButton != null){
+            mConfirmButton.setTextColor(mConfirmButtonTextColor);
+        }
+        return this;
+    }
+
+    public int getConfirmButtonTextColor(){
+        return mConfirmButtonTextColor;
+    }
+
+    public SweetAlertDialog setNeutralButtonTextColor(int color){
+        mNeutralButtonTextColor = color;
+        if(mNeutralButton != null){
+            mNeutralButton.setTextColor(mNeutralButtonTextColor);
+        }
+        return this;
+    }
+
+    public int getNeutralButtonTextColor(){
+        return mNeutralButtonTextColor;
+    }
+
+    public SweetAlertDialog setCancelButtonTextColor(int color){
+        mCancelButtonTextColor = color;
+        if(mCancelButton != null){
+            mCancelButton.setTextColor(mCancelButtonTextColor);
+        }
+        return this;
+    }
+
+    public int getCancelButtonTextColor(){
+        return mCancelButtonTextColor;
     }
 
     public SweetAlertDialog setCancelClickListener(OnSweetClickListener listener) {

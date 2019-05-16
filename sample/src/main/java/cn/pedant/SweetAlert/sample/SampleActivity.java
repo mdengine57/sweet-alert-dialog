@@ -35,6 +35,7 @@ public class SampleActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.disabled_btn_test).setOnClickListener(this);
         findViewById(R.id.dark_style).setOnClickListener(this);
         findViewById(R.id.custom_view_test).setOnClickListener(this);
+        findViewById(R.id.custom_button_colors).setOnClickListener(this);
 
         findViewById(R.id.basic_test).setOnTouchListener(Constants.FOCUS_TOUCH_LISTENER);
         findViewById(R.id.styled_text).setOnTouchListener(Constants.FOCUS_TOUCH_LISTENER);
@@ -49,6 +50,7 @@ public class SampleActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.neutral_btn_test).setOnTouchListener(Constants.FOCUS_TOUCH_LISTENER);
         findViewById(R.id.disabled_btn_test).setOnTouchListener(Constants.FOCUS_TOUCH_LISTENER);
         findViewById(R.id.custom_view_test).setOnTouchListener(Constants.FOCUS_TOUCH_LISTENER);
+        findViewById(R.id.custom_button_colors).setOnTouchListener(Constants.FOCUS_TOUCH_LISTENER);
     }
 
     @Override
@@ -260,6 +262,22 @@ public class SampleActivity extends Activity implements View.OnClickListener {
 
                 dialog.setCustomView(linearLayout);
                 dialog.show();
+                break;
+            case R.id.custom_button_colors:
+                new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
+                        .setTitleText("Title")
+                        .setContentText("Three buttons dialog")
+                        .setConfirmText("Confirm")
+                        .setConfirmButtonBackgroundColor(Color.CYAN)
+                        .setConfirmButtonTextColor(Color.BLACK)
+                        .setCancelText("Cancel")
+                        .setCancelButtonBackgroundColor(Color.RED)
+                        .setCancelButtonTextColor(Color.BLACK)
+                        .setNeutralText("Neutral")
+                        .setNeutralButtonBackgroundColor(Color.GREEN)
+                        .setNeutralButtonTextColor(Color.RED)
+                        .show();
+                break;
 
         }
     }
