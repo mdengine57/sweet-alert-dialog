@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
@@ -61,12 +62,12 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     private boolean mHideConfirmButton = false;
     private Button mCancelButton;
     private Button mNeutralButton;
-    private int mConfirmButtonBackgroundColor;
-    private int mConfirmButtonTextColor;
-    private int mNeutralButtonBackgroundColor;
-    private int mNeutralButtonTextColor;
-    private int mCancelButtonBackgroundColor;
-    private int mCancelButtonTextColor;
+    private Integer mConfirmButtonBackgroundColor;
+    private Integer mConfirmButtonTextColor;
+    private Integer mNeutralButtonBackgroundColor;
+    private Integer mNeutralButtonTextColor;
+    private Integer mCancelButtonBackgroundColor;
+    private Integer mCancelButtonTextColor;
     private ProgressHelper mProgressHelper;
     private FrameLayout mWarningFrame;
     private OnSweetClickListener mCancelClickListener;
@@ -88,7 +89,6 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     //aliases
     public final static int BUTTON_CONFIRM = DialogInterface.BUTTON_POSITIVE;
     public final static int BUTTON_CANCEL = DialogInterface.BUTTON_NEGATIVE;
-    ;
 
     public SweetAlertDialog hideConfirmButton() {
         this.mHideConfirmButton = true;
@@ -172,26 +172,26 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         setContentView(R.layout.alert_dialog);
 
         mDialogView = getWindow().getDecorView().findViewById(android.R.id.content);
-        mTitleTextView = (TextView) findViewById(R.id.title_text);
-        mContentTextView = (TextView) findViewById(R.id.content_text);
-        mCustomViewContainer = (FrameLayout) findViewById(R.id.custom_view_container);
-        mErrorFrame = (FrameLayout) findViewById(R.id.error_frame);
-        mErrorX = (ImageView) mErrorFrame.findViewById(R.id.error_x);
-        mSuccessFrame = (FrameLayout) findViewById(R.id.success_frame);
-        mProgressFrame = (FrameLayout) findViewById(R.id.progress_dialog);
-        mSuccessTick = (SuccessTickView) mSuccessFrame.findViewById(R.id.success_tick);
+        mTitleTextView = findViewById(R.id.title_text);
+        mContentTextView = findViewById(R.id.content_text);
+        mCustomViewContainer = findViewById(R.id.custom_view_container);
+        mErrorFrame = findViewById(R.id.error_frame);
+        mErrorX = mErrorFrame.findViewById(R.id.error_x);
+        mSuccessFrame = findViewById(R.id.success_frame);
+        mProgressFrame = findViewById(R.id.progress_dialog);
+        mSuccessTick = mSuccessFrame.findViewById(R.id.success_tick);
         mSuccessLeftMask = mSuccessFrame.findViewById(R.id.mask_left);
         mSuccessRightMask = mSuccessFrame.findViewById(R.id.mask_right);
-        mCustomImage = (ImageView) findViewById(R.id.custom_image);
-        mWarningFrame = (FrameLayout) findViewById(R.id.warning_frame);
-        mButtonsContainer = (LinearLayout) findViewById(R.id.buttons_container);
-        mConfirmButton = (Button) findViewById(R.id.confirm_button);
+        mCustomImage = findViewById(R.id.custom_image);
+        mWarningFrame = findViewById(R.id.warning_frame);
+        mButtonsContainer = findViewById(R.id.buttons_container);
+        mConfirmButton = findViewById(R.id.confirm_button);
         mConfirmButton.setOnClickListener(this);
         mConfirmButton.setOnTouchListener(Constants.FOCUS_TOUCH_LISTENER);
-        mCancelButton = (Button) findViewById(R.id.cancel_button);
+        mCancelButton = findViewById(R.id.cancel_button);
         mCancelButton.setOnClickListener(this);
         mCancelButton.setOnTouchListener(Constants.FOCUS_TOUCH_LISTENER);
-        mNeutralButton = (Button) findViewById(R.id.neutral_button);
+        mNeutralButton = findViewById(R.id.neutral_button);
         mNeutralButton.setOnClickListener(this);
         mNeutralButton.setOnTouchListener(Constants.FOCUS_TOUCH_LISTENER);
         mProgressHelper.setProgressWheel((ProgressWheel) findViewById(R.id.progressWheel));
@@ -296,7 +296,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         }
     }
 
-    public int getAlerType() {
+    public int getAlertType() {
         return mAlertType;
     }
 
@@ -361,8 +361,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     }
 
     public static int spToPx(float sp, Context context) {
-        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
-        return px;
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
     }
 
     public boolean isShowCancelButton() {
@@ -414,75 +413,96 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         return this;
     }
 
-    public SweetAlertDialog setConfirmButtonBackgroundColor(int color){
+    public SweetAlertDialog setConfirmButtonBackgroundColor(Integer color) {
         mConfirmButtonBackgroundColor = color;
-        if(mConfirmButton != null){
-            mConfirmButton.setBackgroundColor(mConfirmButtonBackgroundColor);
+        if (mConfirmButton != null && color != null) {
+            Drawable[] drawableItems = ViewUtils.getDrawable(mConfirmButton);
+            if(drawableItems != null) {
+                GradientDrawable gradientDrawableUnChecked = (GradientDrawable) drawableItems[1];
+                //solid color
+                gradientDrawableUnChecked.setColor(color);
+                //stroke
+                gradientDrawableUnChecked.setStroke(1, color);
+            }
         }
         return this;
     }
 
-    public int getConfirmButtonBackgroundColor(){
+    public Integer getConfirmButtonBackgroundColor() {
         return mConfirmButtonBackgroundColor;
     }
 
-    public SweetAlertDialog setNeutralButtonBackgroundColor(int color){
+    public SweetAlertDialog setNeutralButtonBackgroundColor(Integer color) {
         mNeutralButtonBackgroundColor = color;
-        if(mNeutralButton != null){
-            mNeutralButton.setBackgroundColor(mNeutralButtonBackgroundColor);
+        if (mNeutralButton != null && color != null) {
+            Drawable[] drawableItems = ViewUtils.getDrawable(mNeutralButton);
+            if(drawableItems != null) {
+                GradientDrawable gradientDrawableUnChecked = (GradientDrawable) drawableItems[0];
+                //solid color
+                gradientDrawableUnChecked.setColor(color);
+                //stroke
+                gradientDrawableUnChecked.setStroke(1, color);
+            }
         }
         return this;
     }
 
-    public int getNeutralButtonBackgroundColor(){
+    public Integer getNeutralButtonBackgroundColor() {
         return mNeutralButtonBackgroundColor;
     }
 
-    public SweetAlertDialog setCancelButtonBackgroundColor(int color){
+    public SweetAlertDialog setCancelButtonBackgroundColor(Integer color) {
         mCancelButtonBackgroundColor = color;
-        if(mCancelButton != null){
-            mCancelButton.setBackgroundColor(mCancelButtonBackgroundColor);
+        if (mCancelButton != null && color != null) {
+            Drawable[] drawableItems = ViewUtils.getDrawable(mCancelButton);
+            if(drawableItems != null) {
+                GradientDrawable gradientDrawableUnChecked = (GradientDrawable) drawableItems[1];
+                //solid color
+                gradientDrawableUnChecked.setColor(color);
+                //stroke
+                gradientDrawableUnChecked.setStroke(1, color);
+            }
         }
         return this;
     }
 
-    public int getCancelButtonBackgroundColor(){
+    public Integer getCancelButtonBackgroundColor() {
         return mCancelButtonBackgroundColor;
     }
 
-    public SweetAlertDialog setConfirmButtonTextColor(int color){
+    public SweetAlertDialog setConfirmButtonTextColor(Integer color) {
         mConfirmButtonTextColor = color;
-        if(mConfirmButton != null){
+        if (mConfirmButton != null && color != null) {
             mConfirmButton.setTextColor(mConfirmButtonTextColor);
         }
         return this;
     }
 
-    public int getConfirmButtonTextColor(){
+    public Integer getConfirmButtonTextColor() {
         return mConfirmButtonTextColor;
     }
 
-    public SweetAlertDialog setNeutralButtonTextColor(int color){
+    public SweetAlertDialog setNeutralButtonTextColor(Integer color) {
         mNeutralButtonTextColor = color;
-        if(mNeutralButton != null){
+        if (mNeutralButton != null && color != null) {
             mNeutralButton.setTextColor(mNeutralButtonTextColor);
         }
         return this;
     }
 
-    public int getNeutralButtonTextColor(){
+    public Integer getNeutralButtonTextColor() {
         return mNeutralButtonTextColor;
     }
 
-    public SweetAlertDialog setCancelButtonTextColor(int color){
+    public SweetAlertDialog setCancelButtonTextColor(Integer color) {
         mCancelButtonTextColor = color;
-        if(mCancelButton != null){
+        if (mCancelButton != null && color != null) {
             mCancelButton.setTextColor(mCancelButtonTextColor);
         }
         return this;
     }
 
-    public int getCancelButtonTextColor(){
+    public Integer getCancelButtonTextColor() {
         return mCancelButtonTextColor;
     }
 
